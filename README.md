@@ -139,23 +139,23 @@ const Image = styled.img`
 
 The image will zoom in quickly (in 200ms) when hovered/focussed, and then depress slowly (600ms) when the mouse pointer moves away.
 
-However, there were a few issues that needed to be resolved:
+However, there were a few issues that needed to be resolved as a result of incorporating this animation:
 
 1. Hiding the overflow when the image expands
 
-   The solution here is to use `overflow: hidden` on `ImageWrapper`.
+   Use `overflow: hidden` on `ImageWrapper`.
 
 2. Ensuring the corners were perfectly round
 
-   At first glance, this was as easy as moving the `border-radius` rule from the image to the wrapper. But there was some weird thing happening on the bottom, and it turned out it was the 'magic space' issue that happens with images, and so that was resolved by adding `display: block` on the image.
+   Move the `border-radius` from the image to the wrapper. Also, eliminate the 'magic space' issue by setting `display: block` on the image.
 
 3. Ensuring flags overlapped the card image
 
-   As a result of adding `overflow: hidden` on the image, it meant the overhang effect of the flags were also being clipped. The solution was to take out the flags from `ImageWrapper` and place it relative to the `Wrapper` instead.
+   As a result of adding `overflow: hidden` on the wrapper, it meant the overhang effect of the flags were also being clipped. The solution was to take out the flags from `ImageWrapper` and place it relative to the `Wrapper` instead.
 
 4. Ensuring shoe zooms in from center of shoe
 
-   This involved changing the center of the `scale` transform from the center of the picture to the center of the shoe, which is about 3 quarters down from the top, so on the `Image` we apply: `transform-origin: 50% 75%`.
+   This involved changing the center/origin of the `scale` transform from the center of the picture to the center of the shoe, which is about 3 quarters down from the top, so on the `Image` we apply: `transform-origin: 50% 75%`.
 
 As a final note, to ensure we are being good in terms of accessibility, we move the code that animates the element to a `media` query:
 
@@ -168,3 +168,9 @@ As a final note, to ensure we are being good in terms of accessibility, we move 
     }
   }
 ```
+
+#### Stretch goal
+
+For the image, I messed around with `brightness` and `saturation` on the CSS `filter` property but most transitions looked a bit 'cheap'. So, from the solution video, a good idea then is to dim the 'normal' state of the image to 90-95% brightness, so that on hover we bump it up to 100% brightness, which gives us the desired effect.
+
+The other thing I did (after a lot of messing around) was add a simple `translateX` on the `Flag` component so that it moves out slightly as the image expands, then recedes back as the image depresses.

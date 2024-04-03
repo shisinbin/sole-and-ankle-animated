@@ -80,11 +80,6 @@ const Wrapper = styled.article`
 const ImageWrapper = styled.div`
   border-radius: 16px 16px 4px 4px;
 
-  /* border: 2px solid transparent;
-  ${Link}:hover & {
-    border-color: var(--color-primary);
-  } */
-
   /* To hide image zoom spilling over */
   overflow: hidden;
 `;
@@ -92,15 +87,17 @@ const ImageWrapper = styled.div`
 const Image = styled.img`
   display: block;
   width: 100%;
-  transition: transform 600ms;
+  filter: brightness(95%);
+  transition: transform 600ms, filter 1000ms;
   will-change: transform;
   transform-origin: center 75%;
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Link}:hover &,
     ${Link}:focus & {
-      transition: transform 200ms;
+      transition: transform 200ms, filter 400ms;
       transform: scale(1.1);
+      filter: brightness(100%);
     }
   }
 `;
@@ -143,12 +140,11 @@ const Flag = styled.div`
   color: var(--color-white);
   border-radius: 2px;
 
-  transition: filter 600ms;
+  transition: transform 600ms;
   @media (prefers-reduced-motion: no-preference) {
-    ${Link}:hover &,
-    ${Link}:focus & {
-      filter: brightness(1.1);
-      transition: filter 200ms;
+    ${Link}:hover & {
+      transform: translateX(4px);
+      transition: transform 200ms;
     }
   }
 `;
