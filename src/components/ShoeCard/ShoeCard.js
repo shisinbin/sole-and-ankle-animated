@@ -35,12 +35,12 @@ const ShoeCard = ({
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
-          <Image alt="" src={imageSrc} />
-          {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
-          {variant === 'new-release' && (
-            <NewFlag>Just released!</NewFlag>
-          )}
+          <Image alt='' src={imageSrc} />
         </ImageWrapper>
+        {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
+        {variant === 'new-release' && (
+          <NewFlag>Just released!</NewFlag>
+        )}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
@@ -73,15 +73,36 @@ const Link = styled.a`
   color: inherit;
 `;
 
-const Wrapper = styled.article``;
-
-const ImageWrapper = styled.div`
+const Wrapper = styled.article`
   position: relative;
 `;
 
-const Image = styled.img`
-  width: 100%;
+const ImageWrapper = styled.div`
   border-radius: 16px 16px 4px 4px;
+
+  /* border: 2px solid transparent;
+  ${Link}:hover & {
+    border-color: var(--color-primary);
+  } */
+
+  /* To hide image zoom spilling over */
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  display: block;
+  width: 100%;
+  transition: transform 600ms;
+  will-change: transform;
+  transform-origin: center 75%;
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      transition: transform 200ms;
+      transform: scale(1.1);
+    }
+  }
 `;
 
 const Row = styled.div`
@@ -121,6 +142,15 @@ const Flag = styled.div`
   font-weight: ${WEIGHTS.bold};
   color: var(--color-white);
   border-radius: 2px;
+
+  transition: filter 600ms;
+  @media (prefers-reduced-motion: no-preference) {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      filter: brightness(1.1);
+      transition: filter 200ms;
+    }
+  }
 `;
 
 const SaleFlag = styled(Flag)`

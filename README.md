@@ -87,3 +87,84 @@ Here are some ideas:
 - Experiment with different orchestrations, animating different elements at different times
 - Use a 3D transform on the drawer so that it swings in like a door closing rather than sliding in from offscreen
 - Instead of fading in all of the drawer's contents at once, add a staggered fade to the individual navigation links so that they fade in one by one, from the top down
+
+## Note to self
+
+### Exercise 1
+
+#### Rejigging HTML structure to incorporate image zoom animation
+
+The HTML structure for a 'show card' is something like this:
+
+```
+    <Link>
+      <Wrapper>
+        <ImageWrapper>
+          <Image />
+          <SaleFlag>Sale</SaleFlag>
+        </ImageWrapper>
+        ...
+      </Wrapper>
+    </Link>
+```
+
+or in non-styled components terms:
+
+```
+    <a>
+      <article>
+        <div>
+          <img />
+          <div>Sale</div>
+        </div>
+        ...
+      </article>
+    </a>
+```
+
+Adding the zoom interaction is easy enough:
+
+```
+const Image = styled.img`
+  ...
+  transition: transform 600ms;
+
+  ${Link}:hover &,
+  ${Link}:focus & {
+    transition: 200ms;
+    transform: scale(1.1);
+  }
+`;
+```
+
+The image will zoom in quickly (in 200ms) when hovered/focussed, and then depress slowly (600ms) when the mouse pointer moves away.
+
+However, there were a few issues that needed to be resolved:
+
+1. Hiding the overflow when the image expands
+
+   The solution here is to use `overflow: hidden` on `ImageWrapper`.
+
+2. Ensuring the corners were perfectly round
+
+   At first glance, this was as easy as moving the `border-radius` rule from the image to the wrapper. But there was some weird thing happening on the bottom, and it turned out it was the 'magic space' issue that happens with images, and so that was resolved by adding `display: block` on the image.
+
+3. Ensuring flags overlapped the card image
+
+   As a result of adding `overflow: hidden` on the image, it meant the overhang effect of the flags were also being clipped. The solution was to take out the flags from `ImageWrapper` and place it relative to the `Wrapper` instead.
+
+4. Ensuring shoe zooms in from center of shoe
+
+   This involved changing the center of the `scale` transform from the center of the picture to the center of the shoe, which is about 3 quarters down from the top, so on the `Image` we apply: `transform-origin: 50% 75%`.
+
+As a final note, to ensure we are being good in terms of accessibility, we move the code that animates the element to a `media` query:
+
+```
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      transform: scale(1.1);
+      transition: transform 200ms;
+    }
+  }
+```
