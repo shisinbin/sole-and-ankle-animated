@@ -177,6 +177,8 @@ For the image, I messed around with `brightness` and `saturation` on the CSS `fi
 
 The other thing I did (after a lot of messing around) was add a simple `translateX` on the `Flag` component so that it moves out slightly as the image expands, then recedes back as the image depresses. Initially I tried a `keyframes` animation whereby the flag would oscillate, but couldn't figure out how to [smoothly revert an animation](https://pragmaticpineapple.com/smoothly-reverting-css-animations/) when the mouse moves away, so settled on this.
 
+Update: turns out I could use the cubic-bezier site to give a 4th value higher than 1, which would get that springiness, e.g. [`cubic-bezier(.14,.78,.36,1.06)`](https://cubic-bezier.com/#.14,.78,.36,1.06).
+
 ### Exercise 2
 
 #### The Creative Link Effect
@@ -196,3 +198,21 @@ Tried to implement one of the link effects from [here](https://tympanus.net/Deve
 ![Logo hover effect](./docs/logo-hover.gif)
 
 Involves adding a pseudo-element, and `transition`ing the `height`/thickness of the underline, its `opacity`, and `transform`ing its position along the y-axis.
+
+### Exercise 3
+
+#### Orchestrating a modal enter animation
+
+- It's worth drawing a graph and figuring out when you want each component to animate and for how long.
+
+- [Cubic-bezier](https://cubic-bezier.com/) is good for getting a component to transition in the way you want (default options can be too subtle occasionally)
+
+- If you want a sort of 'spring' effect when the modal enters the screen, then things get a little complicated, where you'd have to account for an 'overfill'. Would involve negative margins, `calc`, etc. I didn't go for that effect though.
+
+#### Stretch Goal
+
+I implemented a staggered fade in for each mobile nav link. This involved giving each nav link its own `animation-delay` value, which is probably not the best solution, but I just wanted it to work. I also messed around trying to implement a cool hover thing for each link that I got from the site mentioned earlier. It's not appropriate really for mobile, or this use case, but was still kinda fun!
+
+This is a GIF of how the modal enters where the backdrop starts to fade in, 0.2 seconds later the modal starts to slide in, 0.2 seconds later the nav links start to fade in from top to bottom:
+
+![Modal animation](./docs/modal_animation.gif)
