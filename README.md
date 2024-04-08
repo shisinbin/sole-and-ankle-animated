@@ -171,6 +171,8 @@ As a final note, to ensure we are being good in terms of accessibility, we move 
 
 #### Stretch goal
 
-For the image, I messed around with `brightness` and `saturation` on the CSS `filter` property but most transitions looked a bit 'cheap'. So, from the solution video, a good idea then is to dim the 'normal' state of the image to 90-95% brightness, so that on hover we bump it up to 100% brightness, which gives us the desired effect.
+For the image, I messed around with `brightness` and `saturation` on the CSS `filter` property but most transitions looked a bit 'cheap'. From solution video: a good idea is to dim the 'normal' state of the image to 90-95% brightness, so that on hover we can bump it up to 100% brightness, which gives us a nice-looking effect.
 
-The other thing I did (after a lot of messing around) was add a simple `translateX` on the `Flag` component so that it moves out slightly as the image expands, then recedes back as the image depresses.
+![Image component](./docs/ss_showcard_image.png)
+
+The other thing I did (after a lot of messing around) was add a simple `translateX` on the `Flag` component so that it moves out slightly as the image expands, then recedes back as the image depresses. Initially I tried a `keyframes` animation whereby the flag would oscillate, but couldn't figure out how to [smoothly revert an animation](https://pragmaticpineapple.com/smoothly-reverting-css-animations/) when the mouse moves away, so settled on this.
