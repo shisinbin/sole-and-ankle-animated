@@ -176,3 +176,23 @@ For the image, I messed around with `brightness` and `saturation` on the CSS `fi
 ![Image component](./docs/ss_showcard_image.png)
 
 The other thing I did (after a lot of messing around) was add a simple `translateX` on the `Flag` component so that it moves out slightly as the image expands, then recedes back as the image depresses. Initially I tried a `keyframes` animation whereby the flag would oscillate, but couldn't figure out how to [smoothly revert an animation](https://pragmaticpineapple.com/smoothly-reverting-css-animations/) when the mouse moves away, so settled on this.
+
+### Exercise 2
+
+#### The Creative Link Effect
+
+We duplicate the text for each link, using absolute positioning for the second bit of text, and a transform to get it initially 100% its height below:
+
+![Two texts](./docs/two_texts.png)
+
+Interesting aspect to solution was using inheritance for the two styled text components - putting the animation stuff in one place and be able to tweak its settings in the different components that inherit from it using CSS variables:
+
+![Code snippet of inheritance and CSS variables](./docs/inheritance_transforms.png)
+
+#### Stretch Goal
+
+Tried to implement one of the link effects from [here](https://tympanus.net/Development/CreativeLinkEffects/) on the logo:
+
+![Logo hover effect](./docs/logo-hover.gif)
+
+Involves adding a pseudo-element, and `transition`ing the `height`/thickness of the underline, its `opacity`, and `transform`ing its position along the y-axis.
